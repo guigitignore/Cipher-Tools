@@ -109,7 +109,8 @@ def decrypt(message:bytes,ciphPriv:bytes,ciphPub:bytes,senderPub:bytes)->bytes:
 
 def parse_args(args:list[str]):
     if len(args)<2:
-        return print_help()
+        print_help()
+        return 1
     
     fun:Callable
     
@@ -117,19 +118,22 @@ def parse_args(args:list[str]):
         case '-e':
             if len(args)<6:
                 print("Missing arguments")
-                return print_help()
+                print_help()
+                return 1
             fun=encrypt
 
         case '-d':
             if len(args)<7:
                 print("Missing arguments")
-                return print_help()
+                print_help()
+                return 1
             #print(open(args[5],"rb").read())
             fun=decrypt
 
         case _:
             print(f"Unrecognized mode {args[1]}")
-            return print_help()
+            print_help()
+            return 1
     
     try:
         rsaKeys:list[bytes]=[open(key,"rb").read() for key in args[4:]]
@@ -138,11 +142,15 @@ def parse_args(args:list[str]):
 
         with open(args[3],"wb") as out:
             out.write(outputBytes)
+        return 0
 
     except Exception as e:
         print(f"An error occurred during \"{fun.__name__}\" process: {str(e)}")
         print_help()
+        return 1
+
 
 
 if __name__=="__main__":
-    parse_args(sys.argv)
+    ret=parse_args(sys.argv)
+    sys.exit(ret)
