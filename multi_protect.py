@@ -11,8 +11,8 @@ from symetric_utils import aes_encrypt_message,aes_decrypt_message
 
 def print_help():
     print("Usage:")
-    print("multi_protect.py -e **<input_file>**<output_file>**<my_sign_priv.pem>**<my_ciph_pub.pem> [user1_ciph_pub.pem ... [userN_ciph_pub.pem]]")
-    print("multi_protect.py -d **<input_file>**<output_file>**<my_priv_ciph.pem>**<my_pub_ciph.pem>**<sender_sign_pub.pem>**")
+    print("./multi_protect.py -e  <input_file> <output_file> <my_sign_priv.pem> <my_ciph_pub.pem> [user1_ciph_pub.pem ... [userN_ciph_pub.pem]]")
+    print("./multi_protect.py -d  <input_file> <output_file> <my_priv_ciph.pem> <my_pub_ciph.pem> <sender_sign_pub.pem> ")
 
 
 def encrypt(message:bytes,signPriv:bytes,ciphPub:bytes,*userPub:bytes)->bytes:
